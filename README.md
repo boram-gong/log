@@ -11,7 +11,10 @@
 
 日志分割格式参数如下:
 
- `	COMMON_FORMAT 通用格式(不分割); DATE_FORMAT 按天分割; HOUR_FORMAT 按小时分割; MINUTE_FROMAT 按分钟分割`
+ `COMMON_FORMAT 通用格式(不分割)`
+ `DATE_FORMAT 按天分割`
+ `HOUR_FORMAT 按小时分割`
+ `MINUTE_FROMAT 按分钟分割`
  
  举例:
  
