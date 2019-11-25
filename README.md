@@ -18,6 +18,10 @@
  `import "github.com/boram-gong/log"`
  
  `log.InitLog("/var/log", "mylog", log.DATE_FORMAT)`
+ 
+ 打印日志:
+ 
+ `log.ERROR("data")`
 
 
 
