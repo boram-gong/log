@@ -13,6 +13,16 @@ const (
 	MINUTE_FROMAT = "200601021504"
 )
 
+const (
+	Info int = 0 << iota
+	Debug
+	Warn
+	Error
+	Fatal
+)
+
+var LogLevel int
+
 func formatCheck(s string) bool {
 	if s == DATE_FORMAT || s == HOUR_FORMAT || s == MINUTE_FROMAT || s == COMMON_FORMAT {
 		return true
@@ -35,7 +45,13 @@ func InitLog(log_path string, log_name string, format string) {
 		var name = fmt.Sprintf("%s/%s.log", log_path, log_name)
 		gongLog.Start(name)
 	}
+}
 
+func LogLevelFilter(level int) {
+	if level > Fatal || level < Info{
+		return
+	}
+	LogLevel = level
 }
 
 func logManage(log_path string, log_name string, format string) {
@@ -54,18 +70,30 @@ func logManage(log_path string, log_name string, format string) {
 }
 
 func INFO(content interface{}) {
+	if LogLevel > Info {
+		return
+	}
 	gongLog.commonOut("[INFO]", content)
 }
 
 func DEBUG(content interface{}) {
+	if LogLevel > Debug {
+		return
+	}
 	gongLog.commonOut("[DEBUG]", content)
 }
 
 func WARN(content interface{}) {
+	if LogLevel > Debug {
+		return
+	}
 	gongLog.commonOut("[WARN]", content)
 }
 
 func ERROR(content interface{}) {
+	if LogLevel > Error {
+		return
+	}
 	gongLog.commonOut("[ERROR]", content)
 }
 
