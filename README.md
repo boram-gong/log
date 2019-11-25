@@ -5,14 +5,14 @@
 3. 支持级别打印
 4. 支持级别过滤
 
-初始化如下:
+初始化如下:\n
 `InitLog(日志路径, 日志文件名, 日志分割格式)`
 
-日志分割格式参数如下:
+日志分割格式参数如下:\n
  `	COMMON_FORMAT 通用格式(不分割); DATE_FORMAT 按天分割; HOUR_FORMAT 按小时分割; MINUTE_FROMAT 按分钟分割`
  
- 举例:
- `import "github.com/boram-gong/log"
+ 举例:\n
+ `import "github.com/boram-gong/log"\n
     log.InitLog("/var/log", "mylog", log.DATE_FORMAT)`
 
 
