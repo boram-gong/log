@@ -31,7 +31,7 @@
  
  设置级别过滤, 参数为级别有五个:
  
- `Info Debug  Warn  Error  Fatal`
+ `Info\ Debug\ Warn\ Error\ Fatal`
  
  `log.LogLevelFilter(log.Warn)`
  
