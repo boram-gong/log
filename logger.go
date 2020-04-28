@@ -5,8 +5,10 @@ package log
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
+	"runtime"
 )
 
 type logger struct {
@@ -31,8 +33,9 @@ func (this *logger) commonOut(level string, content interface{}) {
 		return
 	}
 	log.SetOutput(this.LogFile)
-	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
-	log.Println(level, content)
+	log.SetFlags(log.Ldate | log.Ltime)
+	_, f, line, _ := runtime.Caller(1)
+	log.Println(fmt.Sprintf("%v_%v %v %v", f, line, level, content))
 }
 
 func (this *logger) fatalOut(level string, content interface{}) {
@@ -40,8 +43,9 @@ func (this *logger) fatalOut(level string, content interface{}) {
 		return
 	}
 	log.SetOutput(this.LogFile)
-	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
-	log.Fatalln(level, content)
+	log.SetFlags(log.Ldate | log.Ltime)
+	_, f, line, _ := runtime.Caller(1)
+	log.Fatalln(fmt.Sprintf("%v_%v %v %v", f, line, level, content))
 }
 
 var gongLog = new(logger)
