@@ -3,6 +3,7 @@ package log
 import (
 	"fmt"
 	"log"
+	"runtime"
 	"time"
 )
 
@@ -73,30 +74,35 @@ func INFO(content interface{}) {
 	if LogLevel > Info {
 		return
 	}
-	gongLog.commonOut("[INFO]", content)
+	_, f, line, _ := runtime.Caller(1)
+	gongLog.commonOut(f, "[INFO]", line, content)
 }
 
 func DEBUG(content interface{}) {
 	if LogLevel > Debug {
 		return
 	}
-	gongLog.commonOut("[DEBUG]", content)
+	_, f, line, _ := runtime.Caller(1)
+	gongLog.commonOut(f,"[DEBUG]", line, content)
 }
 
 func WARN(content interface{}) {
 	if LogLevel > Debug {
 		return
 	}
-	gongLog.commonOut("[WARN]", content)
+	_, f, line, _ := runtime.Caller(1)
+	gongLog.commonOut(f,"[WARN]", line, content)
 }
 
 func ERROR(content interface{}) {
 	if LogLevel > Error {
 		return
 	}
-	gongLog.commonOut("[ERROR]", content)
+	_, f, line, _ := runtime.Caller(1)
+	gongLog.commonOut(f,"[ERROR]", line, content)
 }
 
 func FATAL(content interface{}) {
-	gongLog.fatalOut("[FATAL]", content)
+	_, f, line, _ := runtime.Caller(1)
+	gongLog.fatalOut(f,"[FATAL]", line, content)
 }
