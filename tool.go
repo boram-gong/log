@@ -2,7 +2,10 @@ package log
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
+	"path/filepath"
+	"regexp"
 )
 
 func IsDir(name string) bool {
@@ -31,5 +34,29 @@ func createDirImpl(name string) bool {
 	} else {
 		fmt.Println("create dir Error: ", err)
 		return false
+	}
+}
+
+func DirSize(path string) (int64, error) {
+	var size int64
+	err := filepath.Walk(path, func(_ string, info os.FileInfo, err error) error {
+		if !info.IsDir() {
+			size += info.Size()
+		}
+		return err
+	})
+	return size, err
+}
+
+func RmFile(path string, name string) {
+	fileInfoList, _ := ioutil.ReadDir(path)
+	var rmList []string
+	for i := range fileInfoList {
+		if ok, _ := regexp.MatchString(name, fileInfoList[i].Name()); ok {
+			rmList = append(rmList, fileInfoList[i].Name())
+		}
+	}
+	for _, r := range rmList {
+		os.Remove(path + "/" + r)
 	}
 }

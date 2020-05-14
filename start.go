@@ -2,16 +2,15 @@ package log
 
 import (
 	"fmt"
-	"log"
 	"runtime"
 	"time"
 )
 
 const (
 	COMMON_FORMAT = ""
-	DATE_FORMAT   = "2006-01-02"
+	MONTH_FROMAT  = "200601"
+	DATE_FORMAT   = "20060102"
 	HOUR_FORMAT   = "2006010215"
-	MINUTE_FROMAT = "200601021504"
 )
 
 const (
@@ -25,7 +24,7 @@ const (
 var LogLevel int
 
 func formatCheck(s string) bool {
-	if s == DATE_FORMAT || s == HOUR_FORMAT || s == MINUTE_FROMAT || s == COMMON_FORMAT {
+	if s == COMMON_FORMAT || s == DATE_FORMAT || s == HOUR_FORMAT || s == MONTH_FROMAT {
 		return true
 	} else {
 		return false
@@ -33,26 +32,41 @@ func formatCheck(s string) bool {
 }
 
 func InitLog(log_path string, log_name string, format string) {
-	if log_path == "" || log_name == "" || !formatCheck(format) {
-		log.Fatalln("logger init fail")
+	if log_path == "" {
+		log_path = "./default_log"
+	}
+	if log_name == "" {
+		log_name = "default"
+	}
+	if !formatCheck(format) {
+		format = COMMON_FORMAT
 	}
 	CreateDir(log_path)
+	gongLog.lockLogDir(log_path, log_name, format)
 	if format != COMMON_FORMAT {
 		var name = fmt.Sprintf("%s/%s_%s.log", log_path, log_name, time.Now().Format(format))
-		gongLog.Start(name)
+		gongLog.start(name)
 		go logManage(log_path, log_name, format)
 
 	} else {
 		var name = fmt.Sprintf("%s/%s.log", log_path, log_name)
-		gongLog.Start(name)
+		gongLog.start(name)
 	}
 }
 
 func LogLevelFilter(level int) {
-	if level > Fatal || level < Info{
+	if level > Fatal || level < Info {
 		return
 	}
 	LogLevel = level
+}
+
+func LogFileSweeper(l int) {
+	gongLog.sweeper(l)
+}
+
+func GetLogSize() int64 {
+	return gongLog.getSize()
 }
 
 func logManage(log_path string, log_name string, format string) {
@@ -62,9 +76,9 @@ func logManage(log_path string, log_name string, format string) {
 		nowDay := time.Now().Format(format)
 		if nowDay > lastDay {
 			lastDay = nowDay
-			gongLog.Close()
+			gongLog.close()
 			name := fmt.Sprintf("%s/%s_%s.log", log_path, log_name, nowDay)
-			gongLog.Start(name)
+			gongLog.start(name)
 		}
 
 	}
@@ -83,7 +97,7 @@ func DEBUG(content interface{}) {
 		return
 	}
 	_, f, line, _ := runtime.Caller(1)
-	gongLog.commonOut(f,"[DEBUG]", line, content)
+	gongLog.commonOut(f, "[DEBUG]", line, content)
 }
 
 func WARN(content interface{}) {
@@ -91,7 +105,7 @@ func WARN(content interface{}) {
 		return
 	}
 	_, f, line, _ := runtime.Caller(1)
-	gongLog.commonOut(f,"[WARN]", line, content)
+	gongLog.commonOut(f, "[WARN]", line, content)
 }
 
 func ERROR(content interface{}) {
@@ -99,10 +113,10 @@ func ERROR(content interface{}) {
 		return
 	}
 	_, f, line, _ := runtime.Caller(1)
-	gongLog.commonOut(f,"[ERROR]", line, content)
+	gongLog.commonOut(f, "[ERROR]", line, content)
 }
 
 func FATAL(content interface{}) {
 	_, f, line, _ := runtime.Caller(1)
-	gongLog.fatalOut(f,"[FATAL]", line, content)
+	gongLog.fatalOut(f, "[FATAL]", line, content)
 }
