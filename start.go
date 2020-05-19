@@ -62,7 +62,7 @@ func LogLevelFilter(level int) {
 }
 
 func LogFileSweeper(l int) {
-	gongLog.sweeper(l)
+	go gongLog.sweeper(l)
 }
 
 func GetLogSize() int64 {
