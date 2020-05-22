@@ -89,7 +89,9 @@ func INFO(content ...interface{}) {
 		return
 	}
 	_, f, line, _ := runtime.Caller(1)
-	gongLog.commonOut(f, "[INFO]", line, content)
+	var out = []interface{}{fmt.Sprintf("%v_%v %v", f, line, "[INFO]")}
+	out = append(out, content...)
+	gongLog.commonOut(out...)
 }
 
 func DEBUG(content ...interface{}) {
@@ -97,7 +99,10 @@ func DEBUG(content ...interface{}) {
 		return
 	}
 	_, f, line, _ := runtime.Caller(1)
-	gongLog.commonOut(f, "[DEBUG]", line, content)
+	var out = []interface{}{fmt.Sprintf("%v_%v %v", f, line, "[DEBUG]")}
+	out = append(out, content...)
+
+	gongLog.commonOut(out...)
 }
 
 func WARN(content ...interface{}) {
@@ -105,7 +110,10 @@ func WARN(content ...interface{}) {
 		return
 	}
 	_, f, line, _ := runtime.Caller(1)
-	gongLog.commonOut(f, "[WARN]", line, content)
+	var out = []interface{}{fmt.Sprintf("%v_%v %v", f, line, "[WARN]")}
+	out = append(out, content...)
+
+	gongLog.commonOut(out...)
 }
 
 func ERROR(content ...interface{}) {
@@ -113,10 +121,16 @@ func ERROR(content ...interface{}) {
 		return
 	}
 	_, f, line, _ := runtime.Caller(1)
-	gongLog.commonOut(f, "[ERROR]", line, content)
+	var out = []interface{}{fmt.Sprintf("%v_%v %v", f, line, "[ERROR]")}
+	out = append(out, content...)
+
+	gongLog.commonOut(out...)
 }
 
 func FATAL(content ...interface{}) {
 	_, f, line, _ := runtime.Caller(1)
-	gongLog.fatalOut(f, "[FATAL]", line, content)
+	var out = []interface{}{fmt.Sprintf("%v_%v %v", f, line, "[FATAL]")}
+	out = append(out, content...)
+
+	gongLog.fatalOut(out...)
 }

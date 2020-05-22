@@ -63,22 +63,22 @@ func (this *logger) getSize() int64 {
 	return s
 }
 
-func (this *logger) commonOut(f, level string, line int, content ...interface{}) {
+func (this *logger) commonOut(content ...interface{}) {
 	if this.LogFile == nil {
 		return
 	}
 	log.SetOutput(this.LogFile)
 	log.SetFlags(log.Ldate | log.Ltime)
-	log.Println(fmt.Sprintf("%v_%v %v", f, line, level), content)
+	log.Println(content...)
 }
 
-func (this *logger) fatalOut(f, level string, line int, content ...interface{}) {
+func (this *logger) fatalOut(content ...interface{}) {
 	if this.LogFile == nil {
 		return
 	}
 	log.SetOutput(this.LogFile)
 	log.SetFlags(log.Ldate | log.Ltime)
-	log.Fatalln(fmt.Sprintf("%v_%v %v", f, line, level), content)
+	log.Fatalln(content...)
 }
 
 var gongLog = new(logger)
