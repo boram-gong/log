@@ -84,7 +84,7 @@ func logManage(log_path string, log_name string, format string) {
 	}
 }
 
-func INFO(content interface{}) {
+func INFO(content ...interface{}) {
 	if LogLevel > Info {
 		return
 	}
@@ -92,7 +92,7 @@ func INFO(content interface{}) {
 	gongLog.commonOut(f, "[INFO]", line, content)
 }
 
-func DEBUG(content interface{}) {
+func DEBUG(content ...interface{}) {
 	if LogLevel > Debug {
 		return
 	}
@@ -100,7 +100,7 @@ func DEBUG(content interface{}) {
 	gongLog.commonOut(f, "[DEBUG]", line, content)
 }
 
-func WARN(content interface{}) {
+func WARN(content ...interface{}) {
 	if LogLevel > Debug {
 		return
 	}
@@ -108,7 +108,7 @@ func WARN(content interface{}) {
 	gongLog.commonOut(f, "[WARN]", line, content)
 }
 
-func ERROR(content interface{}) {
+func ERROR(content ...interface{}) {
 	if LogLevel > Error {
 		return
 	}
@@ -116,7 +116,7 @@ func ERROR(content interface{}) {
 	gongLog.commonOut(f, "[ERROR]", line, content)
 }
 
-func FATAL(content interface{}) {
+func FATAL(content ...interface{}) {
 	_, f, line, _ := runtime.Caller(1)
 	gongLog.fatalOut(f, "[FATAL]", line, content)
 }
