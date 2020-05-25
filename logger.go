@@ -54,6 +54,7 @@ func (this *logger) sweeper(l int) {
 				RmFile(this.LogPath, fmt.Sprintf("%s_%s", this.LogName, this.LogMonthCache[0]))
 				this.LogMonthCache = this.LogMonthCache[1:]
 			}
+			this.MonthFlag = now
 		}
 	}
 }
