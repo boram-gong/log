@@ -8,7 +8,7 @@ import (
 
 const (
 	COMMON_FORMAT = ""
-	MONTH_FROMAT  = "200601"
+	MONTH_FORMAT  = "200601"
 	DATE_FORMAT   = "20060102"
 	HOUR_FORMAT   = "2006010215"
 )
@@ -24,7 +24,7 @@ const (
 var LogLevel int
 
 func formatCheck(s string) bool {
-	if s == COMMON_FORMAT || s == DATE_FORMAT || s == HOUR_FORMAT || s == MONTH_FROMAT {
+	if s == COMMON_FORMAT || s == DATE_FORMAT || s == HOUR_FORMAT || s == MONTH_FORMAT {
 		return true
 	} else {
 		return false
